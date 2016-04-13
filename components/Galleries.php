@@ -27,7 +27,7 @@ class Galleries extends ComponentBase
             $medias->take($limit)
                    ->skip($start);
         }
-        
+
         return $medias->get();
     }
 
@@ -63,7 +63,7 @@ class Galleries extends ComponentBase
 
     protected function getGalleryOptions()
     {
-        return GalleryModel::all()->lists('title', 'id');
+        return GalleryModel::orderBy('created_at', 'desc')->get()->lists('title', 'id');
     }
 
 }

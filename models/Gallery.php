@@ -7,6 +7,14 @@ use Model;
  */
 class Gallery extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
+    /*
+     * Validation
+     */
+    public $rules = [
+        'title' => 'required|max:255',
+    ];
 
     /**
      * @var string The database table used by the model.
