@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Gallery
+
+# Model Form Field configuration
+form: $/increative/gallery/models/gallery/fields.yaml
+
+# Model Class name
+modelClass: Increative\Gallery\Models\Gallery
+
+# Default redirect location
+defaultRedirect: increative/gallery/galleries
+
+# Create page
+create:
+    title: Create Gallery
+    redirect: increative/gallery/galleries/update/:id
+    redirectClose: increative/gallery/galleries
+
+# Update page
+update:
+    title: Edit Gallery
+    redirect: increative/gallery/galleries
+    redirectClose: increative/gallery/galleries
+
+# Preview page
+preview:
+    title: Preview Gallery

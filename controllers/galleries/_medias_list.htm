@@ -1,0 +1,76 @@
+<div class="row" id="media-list">
+    <?php if(isset($formModel['medias'])) { ?>
+
+        <?php foreach ($formModel['medias'] as $media) { ?>
+                <div class="col-md-4 media-wrapper">
+                    <div
+                        id="<?= $this->getId() ?>"
+                        class="field-mediafinder style-image-single is-image media-wrapper is-populated"
+                        data-control="mediafinder"
+                    >
+
+                        <!-- Existing value -->
+                        <div class="find-object">
+                            <div class="icon-container">
+                                <img data-find-image src="<?=$media['media_url']?>" alt="<?=$media['title']?>" />
+                            </div>
+                            <div class="info">
+                                <h4 class="filename">
+                                    <span data-find-file-name><?=$media['media_url']?></span>
+                                    <a href="javascript:;" class="find-remove-button">
+                                        <i class="icon-times"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <!-- Data locker -->
+                        <input
+                            type="hidden"
+                            name="medias[]"
+                            value="<?=$media['media_url']?>"
+                            data-find-value
+                            />
+                    </div>
+                </div>
+        <?php } ?>
+
+    <?php } ?>
+
+    <div class="col-md-4 media-wrapper">
+        <div
+            id="<?= $this->getId() ?>"
+            class="field-mediafinder style-image-single is-image media-wrapper"
+            data-control="mediafinder"
+        >
+
+            <!-- Find Button -->
+            <a href="javascript:;" class="find-button">
+                <span class="find-button-icon oc-icon-image"></span>
+            </a>
+
+            <!-- Existing value -->
+            <div class="find-object">
+                <div class="icon-container">
+                    <img data-find-image src="" alt="" />
+                </div>
+                <div class="info">
+                    <h4 class="filename">
+                        <span data-find-file-name></span>
+                        <a href="javascript:;" class="find-remove-button">
+                            <i class="icon-times"></i>
+                        </a>
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Data locker -->
+            <input
+                type="hidden"
+                name="medias[]"
+                value=""
+                data-find-value
+                />
+        </div>
+    </div>
+</div>

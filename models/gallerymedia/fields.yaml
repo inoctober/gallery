@@ -1,0 +1,9 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    medias[]:
+        label: Medias
+        type: mediafinder
+        mode: image

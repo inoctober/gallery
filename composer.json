@@ -1,0 +1,14 @@
+{
+    "name": "increative/gallery",
+    "description": "Simple OctoberCMS Gallery Manager",
+    "type": "composer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Increative Labs",
+            "email": "labs@inologi.co.id"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

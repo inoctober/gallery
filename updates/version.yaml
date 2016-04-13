@@ -1,0 +1,4 @@
+1.0.1: 
+    - First version of Gallery
+    - create_galleries_table.php
+    - create_gallery_media_table.php

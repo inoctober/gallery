@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    title:
+        label: increative.gallery::lang.plugin.gallery.title
+        searchable: true
+    medias_count:
+        label: increative.gallery::lang.plugin.gallery.medias_count
+        relation: medias_count
+        valueFrom: count
+        default: 0
+        searchable: false
+        sortable: false
+    created_at:
+        label: increative.gallery::lang.plugin.gallery.created
+        type: date
+defaultSort:
+    column: created_at
+    direction: desc

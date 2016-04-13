@@ -1,0 +1,25 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    title:
+        label: increative.gallery::lang.plugin.gallery.title
+        type: text
+    description:
+        label: increative.gallery::lang.plugin.gallery.description
+        type: textarea
+    medias:
+        type: repeater
+        form: 
+            fields:
+                title:
+                    label: Title
+                    type: text
+                description:
+                    label: Description
+                    type: textarea
+                media_url:
+                    label: Media
+                    type: mediafinder
+                    mode: image

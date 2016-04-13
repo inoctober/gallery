@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label><?= Lang::get('increative.gallery::lang.plugin.gallery.title') ?></label>
+    <input type="text" name="Gallery[title]" class="form-control" value="<?= isset($formModel['title']) ? $formModel['title'] : '' ?>" />
+</div>
+
+<div class="form-group">
+    <label><?= Lang::get('increative.gallery::lang.plugin.gallery.description') ?></label>
+    <textarea name="Gallery[description]" class="form-control field-textarea size-large"><?= isset($formModel['description']) ? $formModel['description'] : '' ?></textarea>
+</div>

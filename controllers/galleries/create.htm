@@ -1,0 +1,48 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('increative/gallery/galleries') ?>">Galleries</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+        <!-- Primary content -->
+        <?php Block::put('form-contents') ?>
+            <?= $this->makePartial('medias_list') ?>
+        <?php Block::endPut() ?>
+
+        <!-- Complimentary sidebar -->
+        <?php Block::put('form-sidebar') ?>
+            <?= $this->makePartial('gallery_form') ?>
+
+            <div class="form-buttons">
+                <div class="loading-indicator-container">
+                    <button
+                        type="button"
+                        data-request="onSave"
+                        data-request-data="close:1"
+                        data-hotkey="ctrl+enter, cmd+enter"
+                        data-load-indicator="Creating Gallery..."
+                        class="btn btn-default btn-primary">
+                        Create
+                    </button>
+                    <span class="btn-text">
+                        or <a href="<?= Backend::url('increative/gallery/galleries') ?>">Cancel</a>
+                    </span>
+                </div>
+            </div>
+        <?php Block::endPut() ?>
+
+        <!-- Layout execution -->
+        <?php Block::put('body') ?>
+            <?= Form::open(['class'=>'layout stretch']) ?>
+                <?= $this->makeLayout('form-with-sidebar') ?>
+            <?= Form::close() ?>
+        <?php Block::endPut() ?>
+
+<?php else: ?>
+
+    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
+    <p><a href="<?= Backend::url('increative/gallery/galleries') ?>" class="btn btn-default">Return to galleries list</a></p>
+
+<?php endif ?>
