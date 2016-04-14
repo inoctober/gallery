@@ -1,11 +1,13 @@
 <?php namespace Increative\Gallery\Components;
 
+use Redirect;
 use Cms\Classes\ComponentBase;
 use Increative\Gallery\Models\Gallery as GalleryModel;
 use Increative\Gallery\Models\GalleryMedia as GalleryMediaModel;
 
 class Galleries extends ComponentBase
 {
+    public $pageParam;
 
     public function componentDetails()
     {
@@ -15,20 +17,32 @@ class Galleries extends ComponentBase
         ];
     }
 
+    public function onRun()
+    {
+        $this->pageParam = $this->page['pageParam'] = $this->paramName('pageNumber');
+
+        $medias = $this->medias();
+
+        /*
+         * If the page number is not valid, redirect
+         */
+        if ($pageNumberParam = $this->paramName('pageNumber')) {
+            $currentPage = $this->property('pageNumber');
+
+            if ($currentPage > ($lastPage = $medias->lastPage()) && $currentPage > 1)
+                return Redirect::to($this->currentPageUrl([$pageNumberParam => $lastPage]));
+        }
+    }
+
     public function medias()
     {
         $gallery = $this->property('gallery');
-        $start = $this->property('start');
-        $limit = $this->property('limit');
+        $limit = $this->property('perPage') ?: GalleryMediaModel::count();
+        $page = $this->property('pageNumber') ?: 1;
 
         $medias = GalleryMediaModel::where('gallery_id', $gallery);
 
-        if($limit) {
-            $medias->take($limit)
-                   ->skip($start);
-        }
-
-        return $medias->get();
+        return $medias->paginate($limit, $page);
     }
 
     public function defineProperties()
@@ -41,18 +55,15 @@ class Galleries extends ComponentBase
                 'options'           => $this->getGalleryOptions(),
                 'required'          => true
             ],
-            'start' => [
-                'title'             => 'Start',
-                'description'       => 'Starting page',
-                'default'           => 0,
+            'pageNumber' => [
+                'title'             => 'Page number',
+                'description'       => 'Page number',
                 'type'              => 'string',
-                'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'The Start property can contain only numeric symbols',
-                'required'          => true
+                'default'           => '{{ :page }}',
             ],
-            'limit' => [
-                'title'             => 'Limit',
-                'description'       => 'Limit page',
+            'perPage' => [
+                'title'             => 'Per page content',
+                'description'       => 'Per page content',
                 'default'           => 0,
                 'type'              => 'string',
                 'validationPattern' => '^[0-9]+$',

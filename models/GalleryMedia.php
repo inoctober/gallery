@@ -38,4 +38,11 @@ class GalleryMedia extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function getPathAttribute()
+    {
+        $disk_path = config('cms.storage.media.path');
+
+        return str_replace($disk_path.'/', '', $this->media_url);
+    }
+
 }
