@@ -40,9 +40,12 @@
 
         this.$el.on('click', '.find-button', this.proxy(this.onClickFindButton))
         this.$el.on('click', '.find-remove-button', this.proxy(this.onClickRemoveButton))
+        this.$wrapper.on('click', '.find-object', this.proxy(this.onGetMediaProperties))
         this.$el.one('dispose-control', this.proxy(this.dispose))
 
         this.$findValue = $('[data-find-value]', this.$el)
+        this.$titleValue = $('[data-title-value]', this.$el)
+        this.$descriptionValue = $('[data-description-value]', this.$el)
     }
 
     MediaFinder.prototype.dispose = function() {
@@ -54,7 +57,7 @@
         this.$findValue = null
         this.$el = null
 
-        // In some cases options could contain callbacks, 
+        // In some cases options could contain callbacks,
         // so it's better to clean them up too.
         this.options = null
 
@@ -65,6 +68,17 @@
         this.$findValue.val('')
         this.evalIsPopulated()
         this.$wrapper.remove();
+    }
+
+    MediaFinder.prototype.onGetMediaProperties = function() {
+        var $title = this.$titleValue.val();
+        var $description = this.$descriptionValue.val();
+
+        $('input[name="media-title"]').val($title);
+        $('textarea[name="media-description"]').val($description);
+
+        $('.field-mediafinder').attr('data-media-form', 'closed');
+        $('.field-mediafinder', this.$wrapper).attr('data-media-form', 'opened');
     }
 
     MediaFinder.prototype.onClickFindButton = function() {
@@ -147,6 +161,19 @@
 
     $(document).render(function (){
         $('[data-control="mediafinder"]').mediaFinder()
+        $('#save-media-form').on('click', function(e){
+          e.preventDefault();
+          var $form = $(this).parents('#media-form');
+
+          var title = $('input[name="media-title"]', $form).val();
+          var description = $('textarea[name="media-description"]', $form).val();
+
+          $('[data-media-form="opened"] input[name="medias_title[]"]').val(title);
+          $('[data-media-form="opened"] input[name="medias_description[]"]').val(description);
+          $('[data-media-form="opened"] .media-title').text(title);
+
+          return false;
+        });
     })
 
 }(window.jQuery);

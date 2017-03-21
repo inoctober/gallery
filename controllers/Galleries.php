@@ -35,9 +35,13 @@ class Galleries extends Controller
         $this->syncMedias($model);
     }
 
-    public function formAfterUpdate($model)
+    public function formBeforeUpdate($model)
     {
         $model->medias()->delete();
+    }
+
+    public function formAfterUpdate($model)
+    {
         $this->syncMedias($model);
     }
 
@@ -57,15 +61,18 @@ class Galleries extends Controller
     protected function syncMedias($model)
     {
         $medias = Request::input('medias');
+        $titles = Request::input('medias_title');
+        $descriptions = Request::input('medias_description');
 
-        foreach ($medias as $media) {
+        foreach ($medias as $key => $media) {
 
             if($media) {
-                $title = $this->buildMediaName($media);
+                $title = $titles[$key] ?: $this->buildMediaName($media);
 
                 $model->medias()->create([
                     'media_url' => $media,
-                    'title' => $title
+                    'title' => $title,
+                    'description' => $descriptions[$key],
                 ]);
             }
         }

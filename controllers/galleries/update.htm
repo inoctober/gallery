@@ -20,6 +20,7 @@
 
         <!-- Complimentary sidebar -->
         <?php Block::put('form-sidebar') ?>
+            <h3>Gallery</h2>
             <?= $this->makePartial('gallery_form') ?>
             <div class="form-buttons">
                 <div class="loading-indicator-container">
@@ -38,12 +39,28 @@
                     <button type="button" class="btn btn-danger empty oc-icon-trash-o pull-right" data-request="onDelete" data-request-confirm="Do you really want delete this gallery?" data-request-success="$.oc.cmsPage.updateTemplateList('page'); $(this).trigger('close.oc.tab', [{force: true}])" data-control="delete-button"></button>
                 </div>
             </div>
+
+            <div id="media-form">
+              <h3>Media property</h3>
+              <?= $this->makePartial('media_form') ?>
+              <div class="form-buttons">
+                  <div class="loading-indicator-container">
+                      <button
+                          type="button"
+                          id="save-media-form"
+                          data-load-indicator="Updating media..."
+                          class="btn btn-default btn-primary">
+                          Save
+                      </button>
+                  </div>
+                </div>
+            </div>
         <?php Block::endPut() ?>
 
         <!-- Layout execution -->
         <?php Block::put('body') ?>
             <?= Form::open(['class'=>'layout stretch']) ?>
-                <?= $this->makeLayout('form-with-sidebar') ?>
+              <?= $this->makeLayout('form-with-sidebar') ?>
             <?= Form::close() ?>
         <?php Block::endPut() ?>
 

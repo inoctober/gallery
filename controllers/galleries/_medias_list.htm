@@ -16,7 +16,7 @@
                             </div>
                             <div class="info">
                                 <h4 class="filename">
-                                    <span data-find-file-name><?=$media['media_url']?></span>
+                                    <span data-find-file-name class="media-title"><?=$media['title']?></span>
                                     <a href="javascript:;" class="find-remove-button">
                                         <i class="icon-times"></i>
                                     </a>
@@ -30,6 +30,18 @@
                             name="medias[]"
                             value="<?=$media['media_url']?>"
                             data-find-value
+                            />
+                        <input
+                            type="hidden"
+                            name="medias_title[]"
+                            value="<?=$media['title']?>"
+                            data-title-value
+                            />
+                        <input
+                            type="hidden"
+                            name="medias_description[]"
+                            value="<?=$media['description']?>"
+                            data-description-value
                             />
                     </div>
                 </div>
@@ -56,7 +68,7 @@
                 </div>
                 <div class="info">
                     <h4 class="filename">
-                        <span data-find-file-name></span>
+                        <span data-find-file-name class="media-title"></span>
                         <a href="javascript:;" class="find-remove-button">
                             <i class="icon-times"></i>
                         </a>
@@ -70,6 +82,18 @@
                 name="medias[]"
                 value=""
                 data-find-value
+                />
+            <input
+                type="hidden"
+                name="medias_title[]"
+                value=""
+                data-title-value
+                />
+            <input
+                type="hidden"
+                name="medias_description[]"
+                value=""
+                data-description-value
                 />
         </div>
     </div>

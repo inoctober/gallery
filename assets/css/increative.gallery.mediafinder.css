@@ -43,6 +43,9 @@
   font-size: 15px;
   text-decoration: none;
 }
+.field-mediafinder.is-populated {
+  cursor: pointer;
+}
 .field-mediafinder.is-populated .find-object:hover h4 a,
 .field-mediafinder.is-populated .find-object:hover .meta .find-remove-button {
   display: block;
@@ -104,6 +107,7 @@
   display: block;
   border: 1px solid #f6f8f9;
   background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
 }
 .field-mediafinder.style-image-single .find-object .icon-container img {
   -webkit-border-radius: 3px;
@@ -112,6 +116,7 @@
   display: block;
   max-width: 100%;
   height: auto;
+  max-height: 160px;
 }
 .field-mediafinder.style-image-single .find-object .info {
   position: absolute;
@@ -211,4 +216,8 @@
 
 .media-wrapper {
   margin-bottom: 10px;
+}
+
+.field-mediafinder[data-media-form="opened"].style-image-single .find-object .icon-container {
+  border: 2px solid #1681ba;
 }
