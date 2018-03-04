@@ -1,6 +1,7 @@
 <?php namespace Increative\Gallery\Models;
 
 use Model;
+use Storage;
 
 /**
  * GalleryMedia Model
@@ -21,7 +22,7 @@ class GalleryMedia extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = ['media_url', 'title', 'description'];
+    protected $fillable = ['media_url', 'title', 'description', 'path', 'folder'];
 
     /**
      * @var array Relations
@@ -38,11 +39,21 @@ class GalleryMedia extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-    public function getPathAttribute()
+    public function getUrlAttribute()
     {
         $disk_path = config('cms.storage.media.path');
 
-        return str_replace($disk_path.'/', '', $this->media_url);
+        return $disk_path . $this->folder .'/'. $this->path;
+    }
+
+    public function getFolderAttribute($value)
+    {
+        return str_replace('#', '', $value);
+    }
+
+    public function setFolderAttribute($value)
+    {
+        $this->attributes['folder'] = '#'.$value;
     }
 
 }

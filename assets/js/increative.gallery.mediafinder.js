@@ -42,6 +42,8 @@
         this.$el.on('click', '.find-remove-button', this.proxy(this.onClickRemoveButton))
         this.$wrapper.on('click', '.find-object', this.proxy(this.onGetMediaProperties))
         this.$el.one('dispose-control', this.proxy(this.dispose))
+        this.$el.on('click', '[data-find-file-name]', this.proxy(this.onClickMediaLable));
+        this.$el.on('blur', '[data-title-value]', this.proxy(this.onFocusOutMediaTitle));
 
         this.$findValue = $('[data-find-value]', this.$el)
         this.$titleValue = $('[data-title-value]', this.$el)
@@ -66,8 +68,22 @@
 
     MediaFinder.prototype.onClickRemoveButton = function() {
         this.$findValue.val('')
-        this.evalIsPopulated()
         this.$wrapper.remove();
+    }
+
+    MediaFinder.prototype.onClickMediaLable = function() {
+        $('[data-find-file-name]', this.$el).addClass('hidden');
+        $('[data-title-value]', this.$el).removeClass('hidden');
+
+        $('[data-title-value]', this.$el).focus();
+    }
+
+    MediaFinder.prototype.onFocusOutMediaTitle = function() {
+        var title = $('[data-title-value]', this.$el).val();
+
+        $('[data-find-file-name]', this.$el).text(title);
+        $('[data-find-file-name]', this.$el).removeClass('hidden');
+        $('[data-title-value]', this.$el).addClass('hidden');
     }
 
     MediaFinder.prototype.onGetMediaProperties = function() {
@@ -93,30 +109,23 @@
                     return
                 }
 
-                if (items.length > 1) {
-                    alert('Please select a single item.')
-                    return
-                }
-
-                var $clone = self.$wrapper.clone()
-
                 var path, publicUrl
 
                 for (var i=0, len=items.length; i<len; i++) {
+                    var $clone = self.$wrapper.clone()
+
                     path = items[i].path
                     publicUrl = items[i].publicUrl
+
+                    if (self.options.isImage) {
+                        $('[data-find-image]', $clone).attr('src', publicUrl)
+                    }
+
+                    $clone = self.evalIsPopulated($clone, items[i])
+
+                    $('[data-control="mediafinder"]', $clone).mediaFinder()
+                    $('#media-list .media-wrapper:first').after($clone)
                 }
-
-                self.$findValue.val(publicUrl)
-
-                if (self.options.isImage) {
-                    $('[data-find-image]', self.$el).attr('src', publicUrl)
-                }
-
-                self.evalIsPopulated()
-
-                $clone.appendTo('#media-list')
-                $('[data-control="mediafinder"]', $clone).mediaFinder()
 
                 this.hide()
             }
@@ -124,10 +133,17 @@
 
     }
 
-    MediaFinder.prototype.evalIsPopulated = function() {
-        var isPopulated = !!this.$findValue.val()
-        this.$el.toggleClass('is-populated', isPopulated)
-        $('[data-find-file-name]', this.$el).text(this.$findValue.val().substring(1))
+    MediaFinder.prototype.evalIsPopulated = function($el, media) {
+        var pathArray = media.path.split('/')
+        var name = pathArray[pathArray.length - 1]
+        
+        $('.field-mediafinder', $el).addClass('is-populated')
+        $('[data-find-file-name]', $el).text(name)
+        $('[data-title-value]', $el).val(name)
+        $('[data-find-value]', $el).val(name)
+        $('[data-find-folder]', $el).val(media.folder)
+
+        return $el;
     }
 
     MediaFinder.DEFAULTS = {

@@ -3,22 +3,17 @@
 # ===================================
 
 fields:
+    parent:
+        label: increative.gallery::lang.plugin.gallery.parent
+        type: relation
+        nameFrom: title
+        emptyOption: None
     title:
         label: increative.gallery::lang.plugin.gallery.title
         type: text
     description:
         label: increative.gallery::lang.plugin.gallery.description
         type: textarea
-    medias:
-        type: repeater
-        form:
-            fields:
-                title:
-                    label: Title
-                    type: text
-                description:
-                    label: Description
-                    type: textarea
-                media_url:
-                    label: Media
-                    mode: image
+    featured_image:
+        type: text
+        cssClass: hidden

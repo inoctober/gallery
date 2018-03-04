@@ -60,18 +60,21 @@ class Galleries extends Controller
 
     protected function syncMedias($model)
     {
-        $medias = Request::input('medias');
         $titles = Request::input('medias_title');
+        $paths = Request::input('paths');
+        $folders = Request::input('folders');
         $descriptions = Request::input('medias_description');
 
-        foreach ($medias as $key => $media) {
+        foreach ($paths as $key => $path) {
 
-            if($media) {
-                $title = $titles[$key] ?: $this->buildMediaName($media);
+            if($path) {
+                $title = $titles[$key] ?: $this->buildMediaName($path);
 
                 $model->medias()->create([
-                    'media_url' => $media,
+                    'media_url' => $path,
                     'title' => $title,
+                    'folder' => $folders[$key],
+                    'path' => $path,
                     'description' => $descriptions[$key],
                 ]);
             }

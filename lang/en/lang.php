@@ -11,6 +11,8 @@ return [
             'description' => 'Description',
             'medias_count' => 'Medias counted',
             'created' => 'Created at',
+            'parent' => 'Parent',
+            'code' => 'Slug'
         ],
     ],
 ];

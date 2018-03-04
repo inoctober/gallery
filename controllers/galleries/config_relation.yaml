@@ -1,3 +1,12 @@
 # =========================
 # Relation Behaviour Config
 # =========================
+#
+parent:
+    label: Parent
+    view:
+        form: $/increative/gallery/models/gallery/fields.yaml
+        toolbarButtons: link|unlink
+    manage:
+        form: $/increative/gallery/models/gallery/fields.yaml
+        list: $/increative/gallery/models/gallery/columns.yaml

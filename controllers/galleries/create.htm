@@ -13,7 +13,7 @@
 
         <!-- Complimentary sidebar -->
         <?php Block::put('form-sidebar') ?>
-            <?= $this->makePartial('gallery_form') ?>
+            <?= $this->formRender() ?>
 
             <div class="form-buttons">
                 <div class="loading-indicator-container">
@@ -29,21 +29,6 @@
                     <span class="btn-text">
                         or <a href="<?= Backend::url('increative/gallery/galleries') ?>">Cancel</a>
                     </span>
-                </div>
-            </div>
-            <div id="media-form">
-              <h3>Media property</h3>
-              <?= $this->makePartial('media_form') ?>
-              <div class="form-buttons">
-                  <div class="loading-indicator-container">
-                      <button
-                          type="button"
-                          id="save-media-form"
-                          data-load-indicator="Updating media..."
-                          class="btn btn-default btn-primary">
-                          Save
-                      </button>
-                  </div>
                 </div>
             </div>
         <?php Block::endPut() ?>

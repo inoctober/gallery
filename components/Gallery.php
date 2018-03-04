@@ -3,20 +3,23 @@
 use Redirect;
 use Cms\Classes\ComponentBase;
 use Increative\Gallery\Models\Gallery as GalleryModel;
+use Increative\Gallery\Models\GalleryMedia as GalleryMediaModel;
 
-class Galleries extends ComponentBase
+class Gallery extends ComponentBase
 {
     public $pageParam;
 
-    public $galleries;
+    public $gallery;
+
+    public $medias;
 
     public $title;
 
     public function componentDetails()
     {
         return [
-            'name'        => 'Galleries',
-            'description' => 'Display galleries'
+            'name'        => 'Gallery',
+            'description' => 'Display gallery by slug'
         ];
     }
 
@@ -26,7 +29,8 @@ class Galleries extends ComponentBase
         $limit = $this->property('perPage') ?: 9;
         $page = $this->property('pageNumber') ?: 1;
 
-        $this->galleries = $this->gallerys($limit, $page);
+        $this->gallery = $this->gallery();
+        $this->medias  = $this->gallery->medias()->paginate($limit, $page);
 
         /*
          * If the page number is not valid, redirect
@@ -34,21 +38,32 @@ class Galleries extends ComponentBase
         if ($pageNumberParam = $this->paramName('pageNumber')) {
             $currentPage = $this->property('pageNumber');
 
-            if ($currentPage > ($lastPage = $this->galleries->lastPage()) && $currentPage > 1)
+            if ($currentPage > ($lastPage = $this->medias->lastPage()) && $currentPage > 1)
                 return Redirect::to($this->currentPageUrl([$pageNumberParam => $lastPage]));
         }
     }
 
-    protected function gallerys($limit, $page)
+    protected function gallery()
     {
+        $slug = $this->property('slug');
+        $limit = $this->property('perPage') ?: 9;
+        $page = $this->property('pageNumber') ?: 1;
+
         return GalleryModel::with(['medias' => function($query) use ($limit, $page){
-            return $query->limit(1);
-        }])->paginate($limit, $page);
+            return $query->paginate($limit, $page);
+        }, 'childs'])->where('code', $slug)->first();
     }
 
     public function defineProperties()
     {
         return [
+            'slug' => [
+                'title'             => 'Slug',
+                'description'       => 'Slug of gallery to show',
+                'type'              => 'dropdown',
+                'options'           => $this->getGalleryOptions(),
+                'required'          => true
+            ],
             'pageNumber' => [
                 'title'             => 'Page number',
                 'description'       => 'Page number',
@@ -64,6 +79,11 @@ class Galleries extends ComponentBase
                 'validationMessage' => 'The Limit property can contain only numeric symbols'
             ],
         ];
+    }
+
+    protected function getGalleryOptions()
+    {
+        return GalleryModel::orderBy('created_at', 'desc')->get()->lists('title', 'code');
     }
 
 }

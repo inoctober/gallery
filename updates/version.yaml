@@ -1,6 +1,10 @@
 1.0.1:
-    - First version of Gallery
-    - create_galleries_table.php
-    - create_gallery_media_table.php
+  - First version of Gallery
+  - create_galleries_table.php
+  - create_gallery_media_table.php
 1.0.1:
   - Fixed some sh!t
+2.0.0:
+  - Added parent child feature
+  - alter_galleries_table_v1.php
+  - alter_gallery_media_table_v1.php

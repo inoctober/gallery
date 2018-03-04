@@ -6,6 +6,13 @@ columns:
     title:
         label: increative.gallery::lang.plugin.gallery.title
         searchable: true
+    code:
+        label: increative.gallery::lang.plugin.gallery.code
+        searchable: true
+    parent:
+        label: increative.gallery::lang.plugin.gallery.parent
+        relation: parent
+        select: title
     medias_count:
         label: increative.gallery::lang.plugin.gallery.medias_count
         relation: medias_count

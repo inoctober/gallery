@@ -1,54 +1,4 @@
 <div class="row" id="media-list">
-    <?php if(isset($formModel['medias'])) { ?>
-
-        <?php foreach ($formModel['medias'] as $media) { ?>
-                <div class="col-md-4 media-wrapper">
-                    <div
-                        id="<?= $this->getId() ?>"
-                        class="field-mediafinder style-image-single is-image media-wrapper is-populated"
-                        data-control="mediafinder"
-                    >
-
-                        <!-- Existing value -->
-                        <div class="find-object">
-                            <div class="icon-container">
-                                <img data-find-image src="<?=$media['media_url']?>" alt="<?=$media['title']?>" />
-                            </div>
-                            <div class="info">
-                                <h4 class="filename">
-                                    <span data-find-file-name class="media-title"><?=$media['title']?></span>
-                                    <a href="javascript:;" class="find-remove-button">
-                                        <i class="icon-times"></i>
-                                    </a>
-                                </h4>
-                            </div>
-                        </div>
-
-                        <!-- Data locker -->
-                        <input
-                            type="hidden"
-                            name="medias[]"
-                            value="<?=$media['media_url']?>"
-                            data-find-value
-                            />
-                        <input
-                            type="hidden"
-                            name="medias_title[]"
-                            value="<?=$media['title']?>"
-                            data-title-value
-                            />
-                        <input
-                            type="hidden"
-                            name="medias_description[]"
-                            value="<?=$media['description']?>"
-                            data-description-value
-                            />
-                    </div>
-                </div>
-        <?php } ?>
-
-    <?php } ?>
-
     <div class="col-md-4 media-wrapper">
         <div
             id="<?= $this->getId() ?>"
@@ -73,21 +23,28 @@
                             <i class="icon-times"></i>
                         </a>
                     </h4>
+                    <input
+                        type="text"
+                        name="medias_title[]"
+                        value=""
+                        data-title-value
+                        class="form-control hidden"
+                    />
                 </div>
             </div>
 
             <!-- Data locker -->
             <input
                 type="hidden"
-                name="medias[]"
+                name="paths[]"
                 value=""
                 data-find-value
                 />
             <input
                 type="hidden"
-                name="medias_title[]"
+                name="folders[]"
                 value=""
-                data-title-value
+                data-find-folder
                 />
             <input
                 type="hidden"
@@ -97,4 +54,60 @@
                 />
         </div>
     </div>
+    <?php if(isset($formModel['medias'])) { ?>
+
+        <?php foreach ($formModel['medias'] as $media) { ?>
+                <div class="col-md-4 media-wrapper">
+                    <div
+                        id="<?= $this->getId() ?>"
+                        class="field-mediafinder style-image-single is-image media-wrapper is-populated"
+                        data-control="mediafinder"
+                    >
+
+                        <!-- Existing value -->
+                        <div class="find-object">
+                            <div class="icon-container">
+                                <img data-find-image src="<?=$media['url']?>" alt="<?=$media['title']?>" />
+                            </div>
+                            <div class="info">
+                                <h4 class="filename">
+                                    <span data-find-file-name class="media-title"><?=$media['title']?></span>
+                                    <a href="javascript:;" class="find-remove-button">
+                                        <i class="icon-times"></i>
+                                    </a>
+                                </h4>
+                                <input
+                                    type="text"
+                                    name="medias_title[]"
+                                    value="<?=$media['title']?>"
+                                    data-title-value
+                                    class="form-control hidden"
+                                    />
+                            </div>
+                        </div>
+
+                        <!-- Data locker -->
+                        <input
+                            type="hidden"
+                            name="paths[]"
+                            value="<?=$media['path']?>"
+                            data-find-value
+                            />
+                        <input
+                            type="hidden"
+                            name="folders[]"
+                            value="<?=$media['folder']?>"
+                            data-find-folder
+                            />
+                        <input
+                            type="hidden"
+                            name="medias_description[]"
+                            value="<?=$media['description']?>"
+                            data-description-value
+                            />
+                    </div>
+                </div>
+        <?php } ?>
+
+    <?php } ?>
 </div>
