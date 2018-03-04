@@ -15,6 +15,8 @@ class Gallery extends ComponentBase
 
     public $title;
 
+    public $childs;
+
     public function componentDetails()
     {
         return [
@@ -31,6 +33,7 @@ class Gallery extends ComponentBase
 
         $this->gallery = $this->gallery();
         $this->medias  = $this->gallery->medias()->paginate($limit, $page);
+        $this->childs = $this->gallery->childs;
 
         /*
          * If the page number is not valid, redirect
@@ -48,15 +51,28 @@ class Gallery extends ComponentBase
         $slug = $this->property('slug');
         $limit = $this->property('perPage') ?: 9;
         $page = $this->property('pageNumber') ?: 1;
+        $withChild = $this->property('withChild') ?: 1;
 
-        return GalleryModel::with(['medias' => function($query) use ($limit, $page){
+        $model = GalleryModel::with(['medias' => function($query) use ($limit, $page){
             return $query->paginate($limit, $page);
-        }, 'childs'])->where('code', $slug)->first();
+        }]);
+
+        if($withChild) {
+            $model = $model->with('childs');
+        }
+
+        return $model->where('code', $slug)->first();
     }
 
     public function defineProperties()
     {
         return [
+            'withChild' => [
+                'title'             => 'With child',
+                'description'       => 'Fetch childs or not',
+                'type'              => 'checkbox',
+                'default'           => true,
+            ],
             'slug' => [
                 'title'             => 'Slug',
                 'description'       => 'Slug of gallery to show',

@@ -25,8 +25,9 @@ class Galleries extends ComponentBase
         $this->pageParam = $this->page['pageParam'] = $this->paramName('pageNumber');
         $limit = $this->property('perPage') ?: 9;
         $page = $this->property('pageNumber') ?: 1;
+        $topLevelOnly = $this->property('topLevelOnly');
 
-        $this->galleries = $this->gallerys($limit, $page);
+        $this->galleries = $this->galleries($limit, $page, $topLevelOnly);
 
         /*
          * If the page number is not valid, redirect
@@ -39,16 +40,28 @@ class Galleries extends ComponentBase
         }
     }
 
-    protected function gallerys($limit, $page)
+    protected function galleries($limit, $page, $topLevelOnly)
     {
-        return GalleryModel::with(['medias' => function($query) use ($limit, $page){
+        $model = GalleryModel::with(['medias' => function($query) use ($limit, $page){
             return $query->limit(1);
-        }])->paginate($limit, $page);
+        }]);
+
+        if($topLevelOnly) {
+            $model = $model->where('parent_id', null);
+        }
+
+        return $model->paginate($limit, $page);
     }
 
     public function defineProperties()
     {
         return [
+            'topLevelOnly' => [
+                'title'             => 'Top level only',
+                'description'       => 'Fetch top level galleries only or all galleries',
+                'type'              => 'checkbox',
+                'default'           => true,
+            ],
             'pageNumber' => [
                 'title'             => 'Page number',
                 'description'       => 'Page number',
