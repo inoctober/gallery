@@ -8,3 +8,6 @@
   - Added parent child feature
   - alter_galleries_table_v1.php
   - alter_gallery_media_table_v1.php
+2.0.1:
+  - Added with child Feature
+  - Added example at README
