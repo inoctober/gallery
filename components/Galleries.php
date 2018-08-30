@@ -24,7 +24,7 @@ class Galleries extends ComponentBase
     {
         $this->pageParam = $this->page['pageParam'] = $this->paramName('pageNumber');
         $limit = $this->property('perPage') ?: 9;
-        $page = $this->property('pageNumber') ?: 1;
+        $page = $this->property('pageNumber');
         $topLevelOnly = $this->property('topLevelOnly');
 
         $this->galleries = $this->galleries($limit, $page, $topLevelOnly);

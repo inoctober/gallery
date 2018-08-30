@@ -11,3 +11,4 @@
 2.0.1:
   - Added with child Feature
   - Added example at README
+2.0.3: Allow page queryparam to filter result

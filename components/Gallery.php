@@ -29,7 +29,7 @@ class Gallery extends ComponentBase
     {
         $this->pageParam = $this->page['pageParam'] = $this->paramName('pageNumber');
         $limit = $this->property('perPage') ?: 9;
-        $page = $this->property('pageNumber') ?: 1;
+        $page = $this->property('pageNumber');
 
         $this->gallery = $this->gallery();
         $this->medias  = $this->gallery->medias()->paginate($limit, $page);
